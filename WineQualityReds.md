@@ -7,18 +7,9 @@ output:
 
 # The Secret to Good Red Wine by Emi Pires
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
-library(ggplot2)
-library(dplyr)
-library(gridExtra)
-library(GGally)
-library(grid)
-```
 
-```{r echo=FALSE, Load_the_Data}
-# Load the Data
-red <- read.csv("wineQualityreds.csv")
-```
+
+
 
 <p>The dataset contains red wines with the chemical properties of the wine. 
 At least 3 wine experts rated the quality of each wine, providing a rating 
@@ -43,16 +34,59 @@ between 0 (very bad) and 10 (very excellent).</p>
 
 ### Structure and summary of the data
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plots}
-str(red)
+
+```
+## 'data.frame':	1599 obs. of  13 variables:
+##  $ X                   : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ fixed.acidity       : num  7.4 7.8 7.8 11.2 7.4 7.4 7.9 7.3 7.8 7.5 ...
+##  $ volatile.acidity    : num  0.7 0.88 0.76 0.28 0.7 0.66 0.6 0.65 0.58 0.5 ...
+##  $ citric.acid         : num  0 0 0.04 0.56 0 0 0.06 0 0.02 0.36 ...
+##  $ residual.sugar      : num  1.9 2.6 2.3 1.9 1.9 1.8 1.6 1.2 2 6.1 ...
+##  $ chlorides           : num  0.076 0.098 0.092 0.075 0.076 0.075 0.069 0.065 0.073 0.071 ...
+##  $ free.sulfur.dioxide : num  11 25 15 17 11 13 15 15 9 17 ...
+##  $ total.sulfur.dioxide: num  34 67 54 60 34 40 59 21 18 102 ...
+##  $ density             : num  0.998 0.997 0.997 0.998 0.998 ...
+##  $ pH                  : num  3.51 3.2 3.26 3.16 3.51 3.51 3.3 3.39 3.36 3.35 ...
+##  $ sulphates           : num  0.56 0.68 0.65 0.58 0.56 0.56 0.46 0.47 0.57 0.8 ...
+##  $ alcohol             : num  9.4 9.8 9.8 9.8 9.4 9.4 9.4 10 9.5 10.5 ...
+##  $ quality             : int  5 5 5 6 5 5 5 7 7 5 ...
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red)
+
+```
+##        X          fixed.acidity   volatile.acidity  citric.acid   
+##  Min.   :   1.0   Min.   : 4.60   Min.   :0.1200   Min.   :0.000  
+##  1st Qu.: 400.5   1st Qu.: 7.10   1st Qu.:0.3900   1st Qu.:0.090  
+##  Median : 800.0   Median : 7.90   Median :0.5200   Median :0.260  
+##  Mean   : 800.0   Mean   : 8.32   Mean   :0.5278   Mean   :0.271  
+##  3rd Qu.:1199.5   3rd Qu.: 9.20   3rd Qu.:0.6400   3rd Qu.:0.420  
+##  Max.   :1599.0   Max.   :15.90   Max.   :1.5800   Max.   :1.000  
+##  residual.sugar     chlorides       free.sulfur.dioxide
+##  Min.   : 0.900   Min.   :0.01200   Min.   : 1.00      
+##  1st Qu.: 1.900   1st Qu.:0.07000   1st Qu.: 7.00      
+##  Median : 2.200   Median :0.07900   Median :14.00      
+##  Mean   : 2.539   Mean   :0.08747   Mean   :15.87      
+##  3rd Qu.: 2.600   3rd Qu.:0.09000   3rd Qu.:21.00      
+##  Max.   :15.500   Max.   :0.61100   Max.   :72.00      
+##  total.sulfur.dioxide    density             pH          sulphates     
+##  Min.   :  6.00       Min.   :0.9901   Min.   :2.740   Min.   :0.3300  
+##  1st Qu.: 22.00       1st Qu.:0.9956   1st Qu.:3.210   1st Qu.:0.5500  
+##  Median : 38.00       Median :0.9968   Median :3.310   Median :0.6200  
+##  Mean   : 46.47       Mean   :0.9967   Mean   :3.311   Mean   :0.6581  
+##  3rd Qu.: 62.00       3rd Qu.:0.9978   3rd Qu.:3.400   3rd Qu.:0.7300  
+##  Max.   :289.00       Max.   :1.0037   Max.   :4.010   Max.   :2.0000  
+##     alcohol         quality     
+##  Min.   : 8.40   Min.   :3.000  
+##  1st Qu.: 9.50   1st Qu.:5.000  
+##  Median :10.20   Median :6.000  
+##  Mean   :10.42   Mean   :5.636  
+##  3rd Qu.:11.10   3rd Qu.:6.000  
+##  Max.   :14.90   Max.   :8.000
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-sum(is.na(red))
+
+```
+## [1] 0
 ```
 
 <p>This data consists 1599 observations and 13 columns, and with the 1st column 
@@ -62,15 +96,12 @@ being an index, there are 12 variables. No missing value was found.</p>
 <p class="box"><b>Fixed Acidity</b>: most acids involved with wine or fixed or 
 nonvolatile (do not evaporate readily)</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=fixed.acidity)) +
-  geom_histogram(bins=100),
-  ggplot(data=red, aes(x=1, y=fixed.acidity)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$fixed.acidity)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    4.60    7.10    7.90    8.32    9.20   15.90
 ```
 
 <p>Distribution of fixed acidity is slightly right-skewed, and its peak marks 
@@ -82,22 +113,25 @@ minimum number(4.60) and the 1st quartile(7.10).</p>
 <p class="box"><b>Volatile Acidity</b>: the amount of acetic acid in wine, which 
 at too high of levels can lead to an unpleasant, vinegar taste</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=volatile.acidity)) +
-  geom_histogram(bins=60),
-  ggplot(data=red, aes(x=1, y=volatile.acidity)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$volatile.acidity)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.1200  0.3900  0.5200  0.5278  0.6400  1.5800
 ```
 
 <p>Right skewed distribution. I also see a few outliers. Let's investigate the 
 furthest outlier.</p> 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-filter(red, volatile.acidity == max(volatile.acidity))
+
+```
+##      X fixed.acidity volatile.acidity citric.acid residual.sugar chlorides
+## 1 1300           7.6             1.58           0            2.1     0.137
+##   free.sulfur.dioxide total.sulfur.dioxide density  pH sulphates alcohol
+## 1                   5                    9 0.99476 3.5       0.4    10.9
+##   quality
+## 1       3
 ```
 
 <p>It doesn't look like I need to remove it for now, but I also see that the 
@@ -108,22 +142,25 @@ description of this attribute.</p>
 <p class="box"><b>Citric Acid</b>: found in small quantities, citric acid can 
 add 'freshness' and flavor to wines</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=citric.acid)) +
-  geom_histogram(bins=50),
-  ggplot(data=red, aes(x=1, y=citric.acid)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$citric.acid)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   0.090   0.260   0.271   0.420   1.000
 ```
 
 <p>This is far from normal distribution. The highest peak is actually at 0, 
 and the second highest at 0.5. I wonder what that outlier looks like:</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-filter(red, citric.acid == max(citric.acid))
+
+```
+##     X fixed.acidity volatile.acidity citric.acid residual.sugar chlorides
+## 1 152           9.2             0.52           1            3.4      0.61
+##   free.sulfur.dioxide total.sulfur.dioxide density   pH sulphates alcohol
+## 1                  32                   69  0.9996 2.74         2     9.4
+##   quality
+## 1       4
 ```
 
 <p>It doesn't seem like that high level of this attribute contributes to the 
@@ -134,38 +171,29 @@ quality of wine.</p>
 fermentation stops, it's rare to find wines with less than 1 gram/liter and 
 wines with greater than 45 grams/liter are considered sweet</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=residual.sugar)) +
-  geom_histogram(bins=50),
-  ggplot(data=red, aes(x=1, y=residual.sugar)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$residual.sugar)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.900   1.900   2.200   2.539   2.600  15.500
 ```
 
 <p>So many outliers and heavely skewed. The majority is distributed around 1.9 
 to 2.6, and the tail of outliers goes out far away till 15.5. What does it look 
 like if I removed all the extremes? I'll plot a distribution of IQR.</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(data=red, aes(x=residual.sugar)) +
-  geom_histogram(bins = 30) +
-  xlim(1.9, 2.6)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 <p>This tells me the differnce in the IQR is pretty moderate, except that I see 
 alarmingly low count in numbers in 2 decimal places (i.g. 2.05, 2.15 etc.). 
 What makes the low ones exceptionally low? I also want to see what happens when 
 I log-transform the original histogram:</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(data=red, aes(x=residual.sugar)) +
-  geom_histogram(bins=50) +
-  scale_x_continuous(trans = "log2")
+![](WineQualityReds_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+
 ```
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(log10(red$residual.sugar))
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -0.04576  0.27875  0.34242  0.36925  0.41497  1.19033
 ```
 
 <p>This looks much better, though it still has a long tail on the right side.</p>
@@ -173,25 +201,18 @@ summary(log10(red$residual.sugar))
 #### Distribution: Chlorides
 <p class="box"><b>Chlorides</b>: the amount of salt in the wine</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=chlorides)) +
-  geom_histogram(bins=50),
-  ggplot(data=red, aes(x=1, y=chlorides)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$chlorides)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 0.01200 0.07000 0.07900 0.08747 0.09000 0.61100
 ```
 
 <p>Again, many outliers. Here's what happens when I log-transform the 
 histogram.</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(data=red, aes(x=chlorides)) +
-  geom_histogram(bins=50) +
-  scale_x_continuous(trans = "log10")
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
 <p>Looks more normal, and the majority are around 0.075 to 0.1.</p>
 
@@ -200,15 +221,12 @@ ggplot(data=red, aes(x=chlorides)) +
 equilibrium between molecular SO2 (as a dissolved gas) and bisulfite ion; it 
 prevents microbial growth and the oxidation of wine</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=free.sulfur.dioxide)) +
-  geom_histogram(bins=100),
-  ggplot(data=red, aes(x=1, y=free.sulfur.dioxide)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$free.sulfur.dioxide)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    7.00   14.00   15.87   21.00   72.00
 ```
 
 <p>Right skewed distribution with many outliers.</p>
@@ -218,35 +236,22 @@ summary(red$free.sulfur.dioxide)
 S02; in low concentrations, SO2 is mostly undetectable in wine, but at free SO2 
 concentrations over 50 ppm, SO2 becomes evident in the nose and taste of wine</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=total.sulfur.dioxide)) +
-  geom_histogram(bins=100),
-  ggplot(data=red, aes(x=1, y=total.sulfur.dioxide)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$total.sulfur.dioxide)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    6.00   22.00   38.00   46.47   62.00  289.00
 ```
 
 <p>Heavely skewed again, and there are extreme outliers. If I take out those two 
 outliers:</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-tsd.sub <- filter(red, total.sulfur.dioxide < 200)
-grid.arrange(ggplot(data=tsd.sub, aes(x=total.sulfur.dioxide)) +
-  geom_histogram(bins=100),
-  ggplot(data=tsd.sub, aes(x=1, y=total.sulfur.dioxide)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
 <p>When I look at the distribution in log10 scale:</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(data=tsd.sub, aes(x=total.sulfur.dioxide)) +
-  geom_histogram(bins=40) +
-  scale_x_continuous(trans = "log10")
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-24-1.png)<!-- -->
 
 <p>This is closer to a normal distribution, with the highest count around 40.</p>
 
@@ -254,15 +259,12 @@ ggplot(data=tsd.sub, aes(x=total.sulfur.dioxide)) +
 <p class="box"><b>Density</b>: the density of water is close to that of water 
 depending on the percent alcohol and sugar content</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=density)) +
-  geom_histogram(bins=60),
-  ggplot(data=red, aes(x=1, y=density)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-25-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$density)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.9901  0.9956  0.9968  0.9967  0.9978  1.0037
 ```
 
 <p>This is a better looking distribution. Median 0.9968 and Mean 0.9967 so close 
@@ -273,15 +275,12 @@ to gether, this is almost a normal distribution.</p>
 from 0 (very acidic) to 14 (very basic); most wines are between 3-4 on the pH 
 scale</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=pH)) +
-  geom_histogram(bins=60),
-  ggplot(data=red, aes(x=1, y=pH)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-27-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$pH)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   2.740   3.210   3.310   3.311   3.400   4.010
 ```
 
 <p>Another good looking distribution that is close to normal. Outliers on both 
@@ -291,24 +290,17 @@ end that I can possible take out. </p>
 <p class="box"><b>Sulphates</b>: a wine additive which can contribute to sulfur 
 dioxide gas (S02) levels, wich acts as an antimicrobial and antioxidant</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=sulphates)) +
-  geom_histogram(bins=70),
-  ggplot(data=red, aes(x=1, y=sulphates)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-29-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$sulphates)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.3300  0.5500  0.6200  0.6581  0.7300  2.0000
 ```
 
 <p>When I log-scale it:</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(data=tsd.sub, aes(x=sulphates)) +
-  geom_histogram(bins=50) +
-  scale_x_continuous(trans = "log2")
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-31-1.png)<!-- -->
 
 <p>Median stands out in the distribution and gradually decreases to 1, and after 
 that is a long tail of outliers.</p>
@@ -316,15 +308,12 @@ that is a long tail of outliers.</p>
 #### Distribution: Alcohol
 <p class="box"><b>Alcohol</b>: the percent alcohol content of the wine</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-grid.arrange(ggplot(data=red, aes(x=alcohol)) +
-  geom_histogram(bins=70),
-  ggplot(data=red, aes(x=1, y=alcohol)) +
-    geom_boxplot(), nrow=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-32-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$alcohol)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    8.40    9.50   10.20   10.42   11.10   14.90
 ```
 
 <p>The count decreases as the level of alcohol increases. The peak is between 
@@ -333,13 +322,12 @@ summary(red$alcohol)
 #### Distribution: Quality
 <p class="box"><b>Quality</b>: score between 0 and 10</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(data=red, aes(x=quality)) +
-  geom_bar()
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-34-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-summary(red$quality)
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   3.000   5.000   6.000   5.636   6.000   8.000
 ```
 
 <p>I can see that the majority of wine were scored between 5 and 6. No wines 
@@ -347,19 +335,7 @@ were below 3 or above 8.</p>
 
 #### Distribution: Low and High Quality
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Filtering the dataset to use only rows which quality are 3, 4, 7, or 8. 
-no.normal <- red %>%
-              filter(quality >=7 | quality <= 4) %>%
-              mutate(quality.group =
-                ifelse(quality <= 4, "poor","excellent"))
-
-no.normal$quality.group <- factor(no.normal$quality.group, 
-                                  levels = c("poor", "excellent"))
-
-ggplot(data=no.normal, aes(x=quality.group, fill = quality.group)) +
-  geom_bar()
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-36-1.png)<!-- -->
 
 <p>When I exclude the quality 5 and 6, and combined the 3 and 4 into a class 
 called "poor" and 7 and 8 into a class "excellent", I see most were rated high 
@@ -403,34 +379,13 @@ to since their right skewed distributions had quite wide ranges.</p>
 
 ## Bivariate Plots Section
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plots}
-# Function to plot
-plot_quality <- function(attribute, yaxis_name) {
-  ggplot(red, aes(x = factor(quality), y = attribute)) +
-    geom_boxplot() +
-    ylab(yaxis_name)
-}
-```
+
 
 ### Comparison of Quality by Attributes
 Before getting into each plot, I'm going to take a look at the whole dataset 
 for over-all comparison.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12, fig.height=8}
-p1 <- plot_quality(red$fixed.acidity, "fixed.acidity")
-p2 <- plot_quality(red$volatile.acidity, "volatile.acidity")
-p3 <- plot_quality(red$citric.acid, "citric.acid")
-p4 <- plot_quality(red$residual.sugar, "residual.sugar")
-p5 <- plot_quality(red$chlorides, "chlorides")
-p6 <- plot_quality(red$free.sulfur.dioxide, "free.sulfur.dioxide")
-p7 <- plot_quality(red$total.sulfur.dioxide, "total.sulfur.dioxide")
-p8 <- plot_quality(red$density, "density")
-p9 <- plot_quality(red$pH, "pH")
-p10 <- plot_quality(red$sulphates, "sulphates")
-p11 <- plot_quality(red$alcohol, "alcohol")
-
-grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, ncol=4)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-37-1.png)<!-- -->
 
 <p>From this comparison, the attributes that may positively affect the 
 quality of wine are volatile acidity, citric acid, density, pH, sulphates, and 
@@ -441,41 +396,11 @@ alcohol.</p>
 attributes make "poor" and "excellent" wines. I'm going to subset the data so I 
 can focus on those extreme cases.</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Function to create the plot
-plot_att1 <- function(attribute, attribute_name) {
-  ggplot(no.normal, aes(x=quality.group, y=attribute, fill=quality.group)) +
-  geom_jitter( alpha = 0.5, color="#7a0011")  + 
-  geom_boxplot( alpha = 0.8) + 
-  scale_fill_manual(values=c("#888888", "#E69F00")) +
-  stat_summary(fun.y = "mean", 
-               geom = "point", 
-               color = "white", 
-               shape = 8, 
-               size = 5) +
-             theme(axis.text.x = element_text(hjust = 1)) +
-  labs(x = "Quality Group", y = attribute_name)
-}
-
-plot_att1(no.normal$alcohol, "alcohol")
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-38-1.png)<!-- -->
 <p>This is much easier to see the difference in the quality. I'm going to check 
 the rest of attributes.</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=15, fig.width=12}
-p1 <- plot_att1(no.normal$fixed.acidity, "fixed.acidity")
-p2 <- plot_att1(no.normal$volatile.acidity, "volatile.acidity")
-p3 <- plot_att1(no.normal$citric.acid, "citric.acid")
-p4 <- plot_att1(no.normal$residual.sugar, "residual.sugar")
-p5 <- plot_att1(no.normal$chlorides, "chlorides")
-p6 <- plot_att1(no.normal$free.sulfur.dioxide, "free.sulfur.dioxide")
-p7 <- plot_att1(no.normal$total.sulfur.dioxide, "total.sulfur.dioxide")
-p8 <- plot_att1(no.normal$density, "density")
-p9 <- plot_att1(no.normal$pH, "pH")
-p10 <- plot_att1(no.normal$sulphates, "sulphates")
-
-grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, ncol=2)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-39-1.png)<!-- -->
 
 <p>With this plot, I can see the bigger quality distinctions are observed 
 with:<br>
@@ -487,14 +412,7 @@ with:<br>
 #### Correlation Plot
 <p>First running on the original dataset, then comparing it with the one without 
 the "normal" wines.</p>
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12}
-p1 <- ggcorr(red, palette = "RdBu", label = TRUE, 
-             label_size = 4, size = 3)
-p2 <- ggcorr(no.normal, palette = "RdBu", label = TRUE,  
-             label_size = 4, size = 3)
-
-grid.arrange(p1, p2, ncol=2)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-40-1.png)<!-- -->
 <p>The first one on the left confirms my observation on alcohol with its 
 stronger correlation with quality. The second on on the right also confirms my 
 observation on the boxplots comparison where alcohol, volatile acidity, citric 
@@ -543,15 +461,20 @@ wines, I'll exclude the quality 5 and 6 from these plots.</p>
 
 #### Density and Alcohol by Quality
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(no.normal, aes(x = density, y = alcohol, color=quality.group)) +
-    geom_point(alpha=0.6) + 
-    scale_color_manual(values=c("#888888", "#E69F00")) +
-    geom_smooth(method = "lm", se = FALSE,size=1)
+![](WineQualityReds_files/figure-html/unnamed-chunk-41-1.png)<!-- -->
+
 ```
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Calculating correlation coefficient
-cor.test(no.normal$density, no.normal$alcohol, method= "pearson")
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  no.normal$density and no.normal$alcohol
+## t = -10.925, df = 278, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.6251305 -0.4604302
+## sample estimates:
+##       cor 
+## -0.548071
 ```
 
 <p>Density has the strongest correlation with alcohol, and the combination shows 
@@ -564,58 +487,66 @@ four pairs with the strongest correlations.<br>
 
 #### pH and Fixed Acidity
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(no.normal, aes(x = pH, y = fixed.acidity, color=quality.group)) +
-  geom_point(alpha=0.6) + 
-    scale_color_manual(values=c("#888888", "#E69F00")) +
-  geom_smooth(method = "lm", se = FALSE,size=1)
+![](WineQualityReds_files/figure-html/unnamed-chunk-43-1.png)<!-- -->
+
 ```
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-cor.test(no.normal$pH, no.normal$fixed.acidity, method= "pearson")
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  no.normal$pH and no.normal$fixed.acidity
+## t = -19.005, df = 278, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.7985685 -0.6958055
+## sample estimates:
+##        cor 
+## -0.7517146
 ```
 
 <p>They have a pretty strong correlation with each other, but that doesn't seem 
 to directly affect on the quality.</p>
 
 #### Density and Fixed Acidity
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(no.normal, aes(x = density, y = fixed.acidity, color=quality.group)) +
-  geom_point(alpha=0.6) + 
-    scale_color_manual(values=c("#888888", "#E69F00")) +
-  geom_smooth(method = "lm", se = FALSE,size=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-45-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-cor.test(no.normal$density, no.normal$fixed.acidity, method= "pearson")
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  no.normal$density and no.normal$fixed.acidity
+## t = 17.476, df = 278, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.6624851 0.7750110
+## sample estimates:
+##       cor 
+## 0.7235198
 ```
 <p>Here is another strong, correlation, and the seperation of the two quality 
 groups is more apparent.</p>
 
 #### Total Sulfur Dioxide and Free Sulfur Dioxide
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(no.normal, aes(x = total.sulfur.dioxide, y = free.sulfur.dioxide, 
-                      color=quality.group)) +
-  geom_point(alpha=0.6) + 
-    scale_color_manual(values=c("#888888", "#E69F00")) +
-  geom_smooth(method = "lm", se = FALSE,size=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-47-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Calculating correlation coefficient
-cor.test(no.normal$total.sulfur.dioxide, no.normal$free.sulfur.dioxide, 
-         method= "pearson")
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  no.normal$total.sulfur.dioxide and no.normal$free.sulfur.dioxide
+## t = 14.286, df = 278, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.5774698 0.7134541
+## sample estimates:
+##       cor 
+## 0.6506477
 ```
 <p>If I excluded the two outliers on the right:</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(no.normal, aes(x = total.sulfur.dioxide, y = free.sulfur.dioxide, 
-                      color=quality.group)) +
-  geom_point(alpha=0.6) + 
-    scale_color_manual(values=c("#888888", "#E69F00")) +
-  geom_smooth(method = "lm", se = FALSE,size=1) +
-  xlim(0, 130)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-49-1.png)<!-- -->
 
 <p>Most are concentrated towads 0, but as the points spread out more, the 
 levels on both attributes increase. In this relationship, however, I don't see 
@@ -623,29 +554,26 @@ anything significant that are correlated to quality.</p>
 
 #### Citric Acid and Fixed Acidity
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(no.normal, aes(x = citric.acid, y = fixed.acidity, 
-                      color=quality.group)) +
-  geom_point(alpha=0.6) + 
-    scale_color_manual(values=c("#888888", "#E69F00")) +
-  geom_smooth(method = "lm", se = FALSE,size=1)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-50-1.png)<!-- -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-cor.test(no.normal$citric.acid, no.normal$fixed.acidity, method= "pearson")
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  no.normal$citric.acid and no.normal$fixed.acidity
+## t = 17.565, df = 278, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.6645529 0.7764821
+## sample estimates:
+##       cor 
+## 0.7252755
 ```
 
 <p>And if I excluded outliers on both axis:</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(no.normal, aes(x = citric.acid, y = fixed.acidity, 
-                      color=quality.group)) +
-  geom_point(alpha=0.6) + 
-    scale_color_manual(values=c("#888888", "#E69F00")) +
-  geom_smooth(method = "lm", se = FALSE,size=1) +
-  xlim(-0.02, 0.875) +
-  ylim(4, 14)
-```
+![](WineQualityReds_files/figure-html/unnamed-chunk-52-1.png)<!-- -->
 
 <p>Citric acid and fixed acidity have a strong correlation of 0.73. Although the 
 line shows weak seperation of the quality groups, the poor group seems to be 
@@ -677,19 +605,7 @@ expected.</p>
 
 <p class="question">Plot One</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_One}
-ggplot(data=red, aes(x=quality)) +
-  geom_bar(fill="#7a0011") +
-  scale_x_continuous(breaks = 0:10) +
-  ggtitle("Distribution of Quality") +
-  labs(x="Quality of Wine", y="Count") +
-  theme(plot.title = element_text(color="#333333", face="bold", size=17, hjust=0),
-        axis.title = element_text(color="#666666", face="bold", size=12),
-        axis.title.x=element_text(vjust=-2.5),
-        axis.title.y=element_text(angle=90, vjust=2.5),
-        panel.grid.minor = element_blank(),
-        plot.margin = unit(c(1,1,1,1), "cm"))
-```
+![](WineQualityReds_files/figure-html/Plot_One-1.png)<!-- -->
 
 <p>In the range of 0 to 10, most of the wines in this dataset were rated as 
 "normal", between 5 and 6. This was important to be noted in order to determine 
@@ -700,20 +616,7 @@ able to find some interesting facts.</p>
 
 <p class="question">Plot Two</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=12, fit.hight=15, Plot_Two}
-p1 <- plot_att1(no.normal$alcohol, "Alcohol (% by volume)")
-p2 <- plot_att1(no.normal$volatile.acidity, "Volatile Acidity (g / dm^3)")
-p3 <- plot_att1(no.normal$citric.acid, "Citric Acid (g / dm^3)")
-p4 <- plot_att1(no.normal$sulphates, "Sulphates (g / dm3)")
-
-grid.arrange(arrangeGrob(p1 + theme(legend.position="none"),
-             p2 + theme(legend.position="none"),
-             p3 + theme(legend.position="none"),
-             p4 + theme(legend.position="none"),
-             ncol=2),
-             top=textGrob("Attributes by Quality Group",
-                          gp=gpar(fontsize=20, fontface = 'bold')))
-```
+![](WineQualityReds_files/figure-html/Plot_Two-1.png)<!-- -->
 
 <p>Out of all the attributes, alcohol has the strong correlation with quality.
 When I removed ones with their quality 5 and 6, which were the majority of 
@@ -722,46 +625,7 @@ shows the attributes with the strongest correlation.</p>
 
 <p class="question">Plot Three</p>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_Three, fig.height=10, fig.width=12}
-p1 <- ggplot(no.normal, aes(x = density, y = alcohol, color=quality.group)) +
-    geom_point(alpha=0.6, size=2) +
-      scale_color_manual(values=c("#888888", "#E69F00"), 
-                         labels = c("Poor  ", "Excellent ")) +
-    geom_smooth(method = "lm", se = FALSE,size=1) +
-    labs(x=NULL, y="Alcohol (% by volume)", color = " Quality Group: ") +
-    theme(legend.position="top",
-          legend.text = element_text(size = 15),
-          legend.title = element_text(size = 15),
-          legend.background = element_rect(fill="white",
-                                    size=0.7, linetype="solid", 
-                                    colour ="#cccccc"),
-          legend.key = element_rect(size = 5),
-          legend.key.size = unit(2, 'lines'))
-
-p2 <- ggplot(no.normal, aes(x = density, y = fixed.acidity, color=quality.group)) +
-  geom_point(alpha=0.6, size=2) +
-    scale_color_manual(values=c("#888888", "#E69F00")) +
-  geom_smooth(method = "lm", se = FALSE,size=1) +
-  labs(x="Density (g / cm^3)", y="Fixed acidity (g / dm^3)")
-
-#extracting legend
-g_legend<-function(a.gplot){
-  tmp <- ggplot_gtable(ggplot_build(a.gplot))
-  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
-  legend <- tmp$grobs[[leg]]
-  return(legend)}
-
-mylegend<-g_legend(p1)
-
-grid.arrange(arrangeGrob(p1 + theme(legend.position="none"),
-             p2 + theme(legend.position="none"), ncol=1),
-             mylegend, 
-             nrow=2,
-             heights=c(10, 1), 
-             
-             top=textGrob("Comparing Density with Alcohol and Fixed Acidity by Quality",
-                          gp=gpar(fontsize=20, fontface = 'bold')))
-```
+![](WineQualityReds_files/figure-html/Plot_Three-1.png)<!-- -->
 
 <p>When looking at the quality, the strong correlations were observed between 
 density and alcohol, and density and fixed acidity. The lower the alcohol level, 
