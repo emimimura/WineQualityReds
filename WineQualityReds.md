@@ -5,7 +5,7 @@ output:
     keep_md: true 
 ---
 
-# The Secret to Good Red Wine by Emi Pires
+# The Secret to Good Red Wine
 
 
 
