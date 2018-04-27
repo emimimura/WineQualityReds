@@ -11,7 +11,7 @@ between 0 (very bad) and 10 (very excellent). My goal was to look at the levels
 of each attribute of these wines with their ratings to find some patterns and 
 find the key elements to good red wines.</p>
 
-<p>Download dataset</p>
+<p><a href="https://github.com/emimimura/WineQualityReds/blob/master/wineQualityReds.csv" target="_blank">Download dataset</a></p>
 
 <p>The data set contains 1,599 red wines with 11 variables on the chemical 
 properties of the wine. At least 3 wine experts rated the quality of each wine, 
