@@ -1,5 +1,5 @@
 # The Secret to Good Red Wine
-<p><a href="https://github.com/emimimura/WineQualityReds/blob/master/wineQualityReds.csv" target="_blank">Download dataset</a></p>
+<p><a href="https://github.com/emimimura/WineQualityReds/blob/master/wineQualityReds.csv" target="_blank"><b>Download dataset</b></a></p>
 
 <p>What makes a good wine? Could acidity change the quality of a wine? 
 How about alcohol? pH level? Could any component of a wine determine 
