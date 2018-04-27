@@ -1,4 +1,5 @@
 # The Secret to Good Red Wine
+<p><a href="https://github.com/emimimura/WineQualityReds/blob/master/wineQualityReds.csv" target="_blank">Download dataset</a></p>
 
 <p>What makes a good wine? Could acidity change the quality of a wine? 
 How about alcohol? pH level? Could any component of a wine determine 
@@ -10,8 +11,6 @@ At least 3 wine experts rated the quality of each wine, providing a rating
 between 0 (very bad) and 10 (very excellent). My goal was to look at the levels 
 of each attribute of these wines with their ratings to find some patterns and 
 find the key elements to good red wines.</p>
-
-<p><a href="https://github.com/emimimura/WineQualityReds/blob/master/wineQualityReds.csv" target="_blank">Download dataset</a></p>
 
 <p>The data set contains 1,599 red wines with 11 variables on the chemical 
 properties of the wine. At least 3 wine experts rated the quality of each wine, 
